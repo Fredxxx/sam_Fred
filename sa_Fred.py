@@ -1,5 +1,6 @@
 import torch
 import cv2
+import json
 from segment_anything import sam_model_registry
 from segment_anything import SamAutomaticMaskGenerator
 from showImage import showImg
@@ -28,7 +29,9 @@ showImg("Image Colour invert", image_rgb)
 result = mask_generator.generate(image_rgb)
 
 # annotate image
-mask_annotator = sv.MaskAnnotator()
+mask_annotator = sv.MaskAnnotator(color_lookup=sv.ColorLookup.INDEX)
 detections = sv.Detections.from_sam(result)
 annotated_image = mask_annotator.annotate(image_bgr, detections)
 showImg("annotated image", annotated_image)
+
+result
